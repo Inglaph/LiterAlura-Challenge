@@ -1,9 +1,14 @@
 package com.literalura.literalura;
 
+import com.literalura.literalura.model.DatosBusqueda;
+import com.literalura.literalura.principal.Principal;
 import com.literalura.literalura.service.ConsumoAPI;
+import com.literalura.literalura.service.ConvierteDatos;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Scanner;
 
 @SpringBootApplication
 public class LiteraluraApplication implements CommandLineRunner {
@@ -14,8 +19,12 @@ public class LiteraluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		var consumoAPI = new ConsumoAPI();
-		var JSON = consumoAPI.obtenerDatos("https://gutendex.com/books/");
-		System.out.println(JSON);
+		try {
+			Principal principal = new Principal();
+			principal.mostrarMenu();
+
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		}
 	}
 }

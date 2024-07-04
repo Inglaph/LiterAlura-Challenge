@@ -1,21 +1,46 @@
 package com.literalura.literalura.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
-import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true) // ignoro las propiedades desconocidas
 public record DatosLibro(
-        @JsonAlias("id") int id,
         @JsonAlias("title") String titulo,
-        @JsonAlias("authors") List<DatosAutor> autores,
-        @JsonAlias("translators") List<String> traductores,
-        @JsonAlias("subjects") List<String> temas,
-        @JsonAlias("bookshelves") List<String> estanterias,
-        @JsonAlias("languages") List<String> idiomas,
-        @JsonAlias("copyright") boolean derechosDeAutor,
-        @JsonAlias("media_type") String tipoDeMedio,
-        @JsonAlias("formats") Map<String, String> formatos,
-        @JsonAlias("download_count") int cuentaDescargas
+        @JsonAlias("download_count") Double numeroDescargas,
+        @JsonAlias("languages") List<String> idioma,
+        @JsonAlias("authors") List<DatosAutor> autores) {
 
-) {
+    @Override
+    public String toString() {
+        return  "\nTítulo: " + titulo + "\n" +
+                "Autor(es): \n" +
+                autores.stream()
+                        .map(autor -> "  - " + autor.autor())
+                        .reduce("", String::concat) + "\n" +
+                "Idioma(s): " + String.join(", ", idioma) + "\n" +
+                "Descargas: " + numeroDescargas + "\n" +
+                "----------------------------------------";
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public Double getNumeroDescargas() {
+        return numeroDescargas;
+    }
+
+    public List<String> getIdioma() {
+        return idioma;
+    }
+
+    public List<DatosAutor> getAutores() {
+        return autores;
+    }
+
+
+
 }
+
