@@ -1,9 +1,14 @@
 package com.literalura.literalura.principal;
 
+import com.literalura.literalura.model.Autor;
+import com.literalura.literalura.model.DatosAutor;
 import com.literalura.literalura.model.DatosBusqueda;
+import com.literalura.literalura.model.Libro;
 import com.literalura.literalura.service.ConsumoAPI;
 import com.literalura.literalura.service.ConvierteDatos;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
@@ -73,9 +78,9 @@ public class Principal {
 
     private void buscarLibroPorTitulo() {
         System.out.println("Ingrese el nombre del libro que desea buscar: ");
-        String libro = sc.nextLine();
-        libro = libro.replace(" ", "%20");
-        String URLBusqueda = URL_BASE + libro;
+        String libroBuscado = sc.nextLine();
+        libroBuscado = libroBuscado.replace(" ", "%20");
+        String URLBusqueda = URL_BASE + libroBuscado;
         json = consumoApi.obtenerDatos(URLBusqueda);
         System.out.println(json);
 
@@ -89,6 +94,20 @@ public class Principal {
         System.out.println("Autor: " + datos.librosEncontrados().get(0).getAutores().get(0));
         System.out.println("Idioma: " + datos.librosEncontrados().get(0).getIdioma());
         System.out.println("Descargas: " + datos.librosEncontrados().get(0).getNumeroDescargas());
-    }
 
+        // Convertimos el objeto DatosLibro a un objeto de la clase Libro
+        System.out.println("\nDatos del libro convertido a la clase Libro para guardar en BD: ");
+        Libro libro = new Libro(datos.librosEncontrados().get(0));
+        System.out.println(libro);
+        var autores = libro.getAutores();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        int contador = 1;
+        for (Autor autor : autores) {
+            System.out.println(contador + ". " + autor.getAutor() + " - " +
+                    autor.getAnoNacimiento().format(formatter) + " - " + autor.getAnoFallecimiento().format(formatter));
+            contador++;
+        }
+
+    }
 }
