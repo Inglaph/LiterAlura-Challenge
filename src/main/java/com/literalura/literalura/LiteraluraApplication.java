@@ -17,8 +17,8 @@ import java.util.Scanner;
 public class LiteraluraApplication implements CommandLineRunner {
 	@Autowired
 	private LibroRepository libroRepository;
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+//	@Autowired
+//	private JdbcTemplate jdbcTemplate;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LiteraluraApplication.class, args);
@@ -27,8 +27,8 @@ public class LiteraluraApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// Ajusta este comando SQL según tu base de datos
-		String sql = "ALTER SEQUENCE autores_id_seq RESTART WITH 18;";
-		jdbcTemplate.execute(sql);
+//		String sql = "ALTER SEQUENCE autores_id_seq RESTART WITH 20;";
+//		jdbcTemplate.execute(sql);
 		Principal principal = new Principal(libroRepository);
 		principal.mostrarMenu();
 

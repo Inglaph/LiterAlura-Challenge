@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "autores")
-
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,9 @@ public class Autor {
     @ManyToOne
     @JoinColumn(name = "libro_id") // Con esta anotacion le indico que se va a relacionar con la tabla libros
     private Libro libro;
+
+    public Autor() {
+    }
 
     public Autor(DatosAutor autor) {
         this.autor = autor.autor();
@@ -69,8 +72,9 @@ public class Autor {
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         return "Autor: " + autor  +
-                " (" + anoNacimiento + " - " + anoFallecimiento + ")\n";
+                " (" + anoNacimiento.format(formatter) + " - " + anoFallecimiento.format(formatter) + ")\n";
     }
 }
 

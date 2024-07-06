@@ -20,6 +20,9 @@ public class Libro {
     @OneToMany (mappedBy = "libro", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Con fetch le indico que traiga los autores
     private List<Autor> autores;
 
+    public Libro() {
+    }
+
     public Libro(DatosLibro libro) {
         this.titulo = libro.titulo();
         this.idioma = libro.idioma().get(0)
@@ -76,4 +79,6 @@ public class Libro {
                 "Descargas: " + numeroDescargas + "\n" +
                 "----------------------------------------";
     }
+
+
 }
