@@ -34,8 +34,9 @@ public class Principal {
                     0- salir
                     """);
             System.out.println("Ingrese la opcion deseada: ");
-            opcionMenu = sc.nextInt();
-            sc.nextLine(); // Limpiar el buffer
+            try {
+                opcionMenu = Integer.parseInt(sc.nextLine());
+                 //sc.nextLine(); // Limpiar el buffer
             switch (opcionMenu) {
                 case 1:
                     buscarLibroPorTitulo();
@@ -58,6 +59,10 @@ public class Principal {
                 default:
                     System.out.println("Opcion no valida");
                     break;
+            }
+        } catch (NumberFormatException e) {
+                System.out.println("Por favor ingrese un número");
+                continue;
             }
         }
 
@@ -82,11 +87,11 @@ public class Principal {
         libroBuscado = libroBuscado.replace(" ", "%20");
         String URLBusqueda = URL_BASE + libroBuscado;
         json = consumoApi.obtenerDatos(URLBusqueda);
-        System.out.println(json);
+        // System.out.println(json);
 
-        // Convertir el JSON a un objeto de la clase DatosLibro
+        //  Convertir el JSON a un objeto de la clase DatosLibro
         DatosBusqueda datos = conversor.obtenerDatos(json, DatosBusqueda.class);
-        System.out.println(datos);
+        //System.out.println(datos);
 
         // Mostrar los datos del libro encontrado en primer lugar
         System.out.println("Datos del primer libro encontrado: ");
@@ -103,11 +108,13 @@ public class Principal {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         int contador = 1;
+        System.out.println("Autores del libro: ");
         for (Autor autor : autores) {
             System.out.println(contador + ". " + autor.getAutor() + " - " +
                     autor.getAnoNacimiento().format(formatter) + " - " + autor.getAnoFallecimiento().format(formatter));
             contador++;
         }
+        System.out.println("************************************");
 
     }
 }

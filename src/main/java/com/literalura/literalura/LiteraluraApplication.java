@@ -19,12 +19,8 @@ public class LiteraluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		try {
-			Principal principal = new Principal();
-			principal.mostrarMenu();
+		Principal principal = new Principal();
+		principal.mostrarMenu();
 
-		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
-		}
 	}
 }

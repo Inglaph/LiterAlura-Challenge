@@ -1,10 +1,21 @@
 package com.literalura.literalura.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "libros")
 public class Libro {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+
+    @Column(unique = true)
     private String titulo;
+
     private Integer numeroDescargas;
+
     private List<Autor> autores;
 
     public Libro(DatosLibro libro) {
@@ -12,7 +23,7 @@ public class Libro {
         this.numeroDescargas = libro.numeroDescargas();
         this.autores = libro.autores().stream()
                 .map(Autor::new)
-                .toList();
+                .toList(); // convierte el stream en una lista no modifcable (inmutable) de autores
     }
 
     public String getTitulo() {
@@ -39,13 +50,17 @@ public class Libro {
         this.autores = autores;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return  "\nTítulo Libro a guardar en BD: " + titulo + "\n" +
-                "Autor(es): \n" +
-                autores.stream()
-                        .map(autor -> "  - " + autor.getAutor())
-                        .reduce("", String::concat) + "\n" +
+        return  "\nTítulo: " + titulo + "\n" +
                 "Descargas: " + numeroDescargas + "\n" +
                 "----------------------------------------";
     }
