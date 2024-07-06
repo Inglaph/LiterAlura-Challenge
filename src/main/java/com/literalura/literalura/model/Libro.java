@@ -11,15 +11,19 @@ public class Libro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String titulo;
-
+    private String idioma;
     private Integer numeroDescargas;
 
+    // Con la anotacion @OneToMany le indico que es una relacion de uno a muchos
+    @OneToMany (mappedBy = "libro", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // Con fetch le indico que traiga los autores
     private List<Autor> autores;
 
     public Libro(DatosLibro libro) {
         this.titulo = libro.titulo();
+        this.idioma = libro.idioma().get(0)
+         ; // se agrega el idioma
         this.numeroDescargas = libro.numeroDescargas();
         this.autores = libro.autores().stream()
                 .map(Autor::new)
@@ -56,6 +60,14 @@ public class Libro {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
     }
 
     @Override

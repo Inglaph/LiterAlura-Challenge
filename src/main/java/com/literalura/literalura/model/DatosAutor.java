@@ -12,6 +12,8 @@ public record DatosAutor(
 
     @Override
     public String toString() {
-        return autor;
+        return "Nombre: " + autor + "\n" +
+                "Año de nacimiento: " + anoNacimiento + "\n" +
+                "Año de fallecimiento: " + anoFallecimiento + "\n";
     }
 }

@@ -1,11 +1,25 @@
 package com.literalura.literalura.model;
 
+import jakarta.persistence.*;
+
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "autores")
+
 public class Autor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column (nullable = false)
     private String autor;
     private LocalDate anoNacimiento;
     private LocalDate anoFallecimiento;
+
+    @ManyToOne
+    @JoinColumn(name = "libro_id") // Con esta anotacion le indico que se va a relacionar con la tabla libros
+    private Libro libro;
 
     public Autor(DatosAutor autor) {
         this.autor = autor.autor();
@@ -35,6 +49,28 @@ public class Autor {
 
     public void setAnoFallecimiento(LocalDate anoFallecimiento) {
         this.anoFallecimiento = anoFallecimiento;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    @Override
+    public String toString() {
+        return "Autor: " + autor  +
+                " (" + anoNacimiento + " - " + anoFallecimiento + ")\n";
     }
 }
 

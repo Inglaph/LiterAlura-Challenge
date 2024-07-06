@@ -19,7 +19,7 @@ public record DatosLibro(
                 autores.stream()
                         .map(autor -> "  - " + autor.autor())
                         .reduce("", String::concat) + "\n" +
-                "Idioma(s): " + String.join(", ", idioma) + "\n" +
+                "Idioma(s): " + idioma.toString() + "\n" +
                 "Descargas: " + numeroDescargas + "\n" +
                 "----------------------------------------";
     }
@@ -32,7 +32,7 @@ public record DatosLibro(
         return numeroDescargas;
     }
 
-    public List<String> getIdioma() {
+    public  List<String>   getIdioma() {
         return idioma;
     }
 
