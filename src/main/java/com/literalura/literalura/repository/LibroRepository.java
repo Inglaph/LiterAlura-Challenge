@@ -12,6 +12,9 @@ import java.util.Optional;
 
 public interface LibroRepository extends JpaRepository<Libro, Long> {
 
+    // query que devuelve un libro por su titulo
+    Optional<Libro> findByTitulo(String titulo);
+
     // query que devuelve una lista de autores de todos los libros
     @Query("SELECT a FROM Libro l JOIN l.autores a")
     List<Autor> autoresDeLibros();

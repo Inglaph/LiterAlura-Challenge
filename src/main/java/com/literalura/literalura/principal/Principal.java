@@ -1,9 +1,6 @@
 package com.literalura.literalura.principal;
 
-import com.literalura.literalura.model.Autor;
-import com.literalura.literalura.model.DatosAutor;
-import com.literalura.literalura.model.DatosBusqueda;
-import com.literalura.literalura.model.Libro;
+import com.literalura.literalura.model.*;
 import com.literalura.literalura.repository.LibroRepository;
 import com.literalura.literalura.service.ConsumoAPI;
 import com.literalura.literalura.service.ConvierteDatos;
@@ -25,6 +22,7 @@ public class Principal {
     private LibroRepository libroRepository;
     //private AutorRepository autorRepository;
     private List<Libro> libros;
+    private String libroBuscado = "";
 
     public Principal(LibroRepository libroRepository) {
         this.libroRepository = libroRepository;
@@ -79,7 +77,7 @@ public class Principal {
 
     private void getDatosBusquedaAPI() {
         System.out.println("Ingrese el nombre del libro que desea buscar: ");
-        var libroBuscado = sc.nextLine();
+        libroBuscado = sc.nextLine();
         libroBuscado = libroBuscado.replace(" ", "%20");
         String URLBusqueda = URL_BASE + libroBuscado;
         json = consumoApi.obtenerDatos(URLBusqueda);
@@ -186,8 +184,12 @@ public class Principal {
         getDatosBusquedaAPI();
         DatosBusqueda datos = conversor.obtenerDatos(json, DatosBusqueda.class);
 
-        if (!datos.librosEncontrados().isEmpty()) { // Si se encontraron libros
-            System.out.println("Datos del primer libro encontrado: ");
+
+        if (datos.librosEncontrados().size() > 0) {
+
+            // Mostrar los datos del primer libro encontrado
+            System.out.println("Libros encontrados: ");
+            System.out.println("Datos del primer libro filtrado: ");
             System.out.println("Título: " + datos.librosEncontrados().get(0).getTitulo());
            // traer los datos del autor
             System.out.println("Idioma: " + datos.librosEncontrados().get(0).getIdioma());
@@ -195,7 +197,21 @@ public class Principal {
             Optional<String> datosAutor = datos.librosEncontrados().get(0).autores().stream()
                     .map(DatosAutor::autor)
                     .findFirst();
-            // muestro el listado de autores
+
+            // valido si la fecha de nacimiento o fallecimiento  es nula, no guardo el autor
+            if (datos.librosEncontrados().get(0).autores().stream().anyMatch(autor -> autor.anoNacimiento() == null || autor.anoFallecimiento() == null)) {
+                System.out.println("No se puede guardar:  El autor debe tener la fecha de nacimiento y fallecimiento.");
+                return;
+            }
+
+            // valido que el primer libro encontrado no este en la base de datos
+            Optional<Libro> libroEncontrado = libroRepository.findByTitulo(datos.librosEncontrados().get(0).getTitulo());
+            if (libroEncontrado.isPresent()) {
+                System.out.println("El libro ya se encuentra registrado en la base de datos.");
+                return;
+            }
+
+
             System.out.println("Autor: " + datosAutor.toString().formatted("%s", datosAutor.get()));
 
             // Convertir los datos del libro a la clase Libro

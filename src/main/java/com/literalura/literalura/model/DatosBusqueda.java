@@ -22,4 +22,10 @@ public record DatosBusqueda(
     public List<DatosLibro> librosEncontrados() {
         return librosEncontrados;
     }
+
+    public String getBusqueda() {
+        return librosEncontrados.stream()
+                .map(DatosLibro::getTitulo)
+                .reduce("", String::concat);
+    }
 }
