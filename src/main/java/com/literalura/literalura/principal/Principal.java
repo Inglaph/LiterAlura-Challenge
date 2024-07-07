@@ -143,7 +143,7 @@ public class Principal {
         List<Autor> autor = libroRepository.autoresVivosEnAnio(fecha);
         if (!autor.isEmpty() ){
             System.out.println("Autores vivos en el año " + anio + ": ");
-            autor.stream().forEach(System.out::print);
+            autor.stream().forEach(System.out::println);
         } else {
             System.out.println("No se encontraron autores vivos en el año " + anio + ".");
         }
@@ -157,7 +157,7 @@ public class Principal {
                 .values()
                 .stream()
                 .sorted(Comparator.comparing(Autor::getAutor))
-                .forEach(System.out::print);
+                .forEach(System.out::println);
     }
 
     private void listarLibrosRegistrados() {
@@ -187,13 +187,19 @@ public class Principal {
 
         if (datos.librosEncontrados().size() > 0) {
 
+            // valido que el primer libro encontrado no este en la base de datos
+            Optional<Libro> libroEncontrado = libroRepository.findByTitulo(datos.librosEncontrados().get(0).getTitulo());
+            if (libroEncontrado.isPresent()) {
+                System.out.println("Título: " + libroEncontrado.get().getTitulo());
+                System.out.println("El libro ya se encuentra registrado en la base de datos.");
+                return;
+            }
             // Mostrar los datos del primer libro encontrado
-            System.out.println("Libros encontrados: ");
-            System.out.println("Datos del primer libro filtrado: ");
-            System.out.println("Título: " + datos.librosEncontrados().get(0).getTitulo());
+//            System.out.println("Libros encontrados: ");
+//            System.out.println("Título: " + datos.librosEncontrados().get(0).getTitulo());
            // traer los datos del autor
-            System.out.println("Idioma: " + datos.librosEncontrados().get(0).getIdioma());
-            System.out.println("Descargas: " + datos.librosEncontrados().get(0).getNumeroDescargas());
+//            System.out.println("Idioma: " + datos.librosEncontrados().get(0).getIdioma());
+//            System.out.println("Descargas: " + datos.librosEncontrados().get(0).getNumeroDescargas());
             Optional<String> datosAutor = datos.librosEncontrados().get(0).autores().stream()
                     .map(DatosAutor::autor)
                     .findFirst();
@@ -204,19 +210,18 @@ public class Principal {
                 return;
             }
 
-            // valido que el primer libro encontrado no este en la base de datos
-            Optional<Libro> libroEncontrado = libroRepository.findByTitulo(datos.librosEncontrados().get(0).getTitulo());
-            if (libroEncontrado.isPresent()) {
-                System.out.println("El libro ya se encuentra registrado en la base de datos.");
+            // Mostrar los datos del autor validando que no sea nulo
+            if (datosAutor.isPresent()) {
+               //System.out.print("Autor: " + datosAutor.toString().formatted("%s", datosAutor.get()));
+                System.out.println("");
+            }   else {
+                System.out.println("No se puede guardar:  El Libro debe tener al menos un autor.");
                 return;
             }
 
-
-            System.out.println("Autor: " + datosAutor.toString().formatted("%s", datosAutor.get()));
-
             // Convertir los datos del libro a la clase Libro
             Libro libro = new Libro(datos.librosEncontrados().get(0));
-            System.out.println("\nDatos del libro convertido a la clase Libro para guardar en BD: ");
+//            System.out.println("\nDatos del libro convertido a la clase Libro para guardar en BD: ");
             System.out.println(libro);
             System.out.println("Autores: ");
             libro.getAutores().forEach(System.out::println);
@@ -228,6 +233,10 @@ public class Principal {
             }
 
             libroRepository.save(libro); // Guardar el libro y sus autores en la base de datos
+
+            // confirmo que se guardo el libro
+            System.out.println("\nLibro guardado en la base de datos.");
+
         } else { // Si no se encontraron libros
             System.out.println("No se encontraron libros con el título buscado.");
         }

@@ -74,7 +74,7 @@ public class Autor {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         return "Autor: " + autor  +
-                " (" + anoNacimiento.format(formatter) + " - " + anoFallecimiento.format(formatter) + ")\n";
+                " (" + anoNacimiento.format(formatter) + " - " + anoFallecimiento.format(formatter) + ")";
     }
 }
 
