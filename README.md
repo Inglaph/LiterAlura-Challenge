@@ -3,12 +3,6 @@ Desarrollo del desafio para especializacion BackEnd - Oracle ONE Next Education 
 
 by [*@inglaph*](https://github.com/Inglaph)
 *2024*
-# Literalura Application
-
-by [*@inglaph*](https://github.com/Inglaph)
-**Oracle ONE Next Education G6**  
-*2024*
-
 ___
 ## Tabla de Contenido
 
