@@ -25,23 +25,28 @@ Literalura es una aplicación diseñada para facilitar la búsqueda y gestión d
 
 ## Funcionalidades
 - **Menu principal:** Cuenta con el siguiente menu.
-  ![Menu](image.png)
+  ![image](https://github.com/Inglaph/LiterAlura-Challenge/assets/86210091/30949079-a457-45fc-8aea-dd35aeb0717b)
 
 
 - **Búsqueda de libros por título:** Utiliza la API de Gutendex para buscar libros por título.
- 
+![image](https://github.com/Inglaph/LiterAlura-Challenge/assets/86210091/e383f918-1211-4dcf-bc8b-ded01290ed11)
 
 
 - **Listado de libros registrados:** Muestra todos los libros que están registrados en la base de datos local.
+![image](https://github.com/Inglaph/LiterAlura-Challenge/assets/86210091/87c8ec98-6ae9-4a35-957a-846cb7eee11d)
+
 
 - 
 - **Listado de autores registrados:** Muestra todos los autores que están registrados en la base de datos local.
+![image](https://github.com/Inglaph/LiterAlura-Challenge/assets/86210091/f82183e6-6679-4a87-be78-e56078997c27)
 
 - 
 - **Listado de autores vivos en un año específico:** Permite listar autores que estaban vivos en un año específico, basado en la información de la base de datos.
+![image](https://github.com/Inglaph/LiterAlura-Challenge/assets/86210091/1a0d6d21-ebb9-4185-8b6c-9fbabcfa08b3)
 
 - **Listado de libros por idioma:** Permite listar libros registrados en la base de datos filtrados por idioma.
-  ![libros-registrados-idioma](image-7.png)
+ ![image](https://github.com/Inglaph/LiterAlura-Challenge/assets/86210091/44e9d46c-0a43-445b-a87c-68c814c6c2a5)
+
 - 
 
 ## Validaciones
