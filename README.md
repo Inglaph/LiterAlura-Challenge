@@ -41,7 +41,8 @@ Literalura es una aplicación diseñada para facilitar la búsqueda y gestión d
 - **Listado de autores vivos en un año específico:** Permite listar autores que estaban vivos en un año específico, basado en la información de la base de datos.
 
 - **Listado de libros por idioma:** Permite listar libros registrados en la base de datos filtrados por idioma.
-
+  ![libros-registrados-idioma](image-7.png)
+- 
 
 ## Validaciones
 - **No guarda el mismo libro dos veces en la BD:**
